@@ -107,9 +107,9 @@ func GenerateServerCerts(t *testing.T) (string, string, string) {
 	require.NoError(err)
 
 	t.Cleanup(func() {
-		os.Remove(caFile.Name())
-		os.Remove(certFile.Name())
-		os.Remove(certKeyFile.Name())
+		os.RemoveAll(caFile.Name())
+		os.RemoveAll(certFile.Name())
+		os.RemoveAll(certKeyFile.Name())
 	})
 	return caFile.Name(), certFile.Name(), certKeyFile.Name()
 }

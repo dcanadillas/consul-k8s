@@ -116,8 +116,8 @@ func TestRun_ConnectServices(t *testing.T) {
 			tokenFile := fmt.Sprintf("/tmp/%d1", rand.Int())
 			proxyFile := fmt.Sprintf("/tmp/%d2", rand.Int())
 			t.Cleanup(func() {
-				_ = os.Remove(proxyFile)
-				_ = os.Remove(tokenFile)
+				_ = os.RemoveAll(proxyFile)
+				_ = os.RemoveAll(tokenFile)
 			})
 
 			// Start Consul server with ACLs enabled and default deny policy.
@@ -274,7 +274,7 @@ func TestRun_Gateways(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			proxyFile := fmt.Sprintf("/tmp/%d2", rand.Int())
 			t.Cleanup(func() {
-				_ = os.Remove(proxyFile)
+				_ = os.RemoveAll(proxyFile)
 			})
 
 			// Start Consul server with ACLs enabled and default deny policy.
@@ -485,7 +485,7 @@ func TestRun_ConnectServices_Errors(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			proxyFile := fmt.Sprintf("/tmp/%d", rand.Int())
 			t.Cleanup(func() {
-				os.Remove(proxyFile)
+				os.RemoveAll(proxyFile)
 			})
 
 			// Start Consul server.
@@ -581,7 +581,7 @@ func TestRun_Gateways_Errors(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			proxyFile := fmt.Sprintf("/tmp/%d", rand.Int())
 			t.Cleanup(func() {
-				os.Remove(proxyFile)
+				os.RemoveAll(proxyFile)
 			})
 
 			// Start Consul server.

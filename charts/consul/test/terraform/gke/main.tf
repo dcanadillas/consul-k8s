@@ -29,7 +29,7 @@ resource "google_container_cluster" "cluster" {
     machine_type = "e2-standard-4"
   }
   pod_security_policy_config {
-    enabled = true
+    enabled = false
   }
 
   resource_labels = var.labels

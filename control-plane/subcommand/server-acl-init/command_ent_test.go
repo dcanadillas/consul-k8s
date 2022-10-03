@@ -1142,7 +1142,7 @@ func TestRun_NamespaceEnabled_ValidateLoginToken_SecondaryDatacenter(t *testing.
 			authMethodName := fmt.Sprintf("%s-%s-%s", resourcePrefix, componentAuthMethod, "dc2")
 			serviceAccountName := fmt.Sprintf("%s-%s", resourcePrefix, c.ComponentName)
 
-			k8s, _, consulHTTPAddr, cleanup := mockReplicatedSetup(t, bootToken)
+			k8s, _, consulHTTPAddr, _ := mockReplicatedSetup(t, bootToken)
 			defer cleanup()
 			_, jwtToken := setUpK8sServiceAccount(t, k8s, c.Namespace)
 
@@ -1217,7 +1217,7 @@ func TestRun_PartitionTokenDefaultPartition_WithProvidedSecretID(t *testing.T) {
 	partitionToken := "123e4567-e89b-12d3-a456-426614174000"
 	partitionTokenFile, err := os.CreateTemp("", "partitiontoken")
 	require.NoError(t, err)
-	defer os.Remove(partitionTokenFile.Name())
+	defer os.RemoveAll(partitionTokenFile.Name())
 
 	partitionTokenFile.WriteString(partitionToken)
 	// Run the command.
