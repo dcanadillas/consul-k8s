@@ -211,7 +211,7 @@ jobs:
           done
 
   acceptance:
-    needs: [ get-product-version, dev-upload-docker, get-go-version]
+    needs: [ get-product-version, dev-upload-docker, get-go-version, cleanup]
     runs-on: [custom, linux, xl]
     strategy:
       matrix:
