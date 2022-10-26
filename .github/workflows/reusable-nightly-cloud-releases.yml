@@ -189,10 +189,15 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ${{ inputs.consul-helm-test-image }}
+      options: --user root
       credentials:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASS }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.checkout-ref }}
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
