@@ -18,6 +18,7 @@ FEATURES:
 IMPROVEMENTS:
 * CLI
   * Update minimum go version for project to 1.19 [[GH-1633](https://github.com/hashicorp/consul-k8s/pull/1633)]
+  * `consul-k8s uninstall` now deletes custom resources when uninstalling Consul. [[GH-1623](https://github.com/hashicorp/consul-k8s/pull/1623)] 
 * Control Plane
   * Update minimum go version for project to 1.19 [[GH-1633](https://github.com/hashicorp/consul-k8s/pull/1633)]
 * Helm:
