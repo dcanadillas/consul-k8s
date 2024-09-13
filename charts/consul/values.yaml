@@ -3201,6 +3201,11 @@ meshGateway:
   # @type: string
   annotations: null
 
+  aclMeshGatewayToken:
+    secretName: null
+    secretKey: null
+
+
 # Configuration options for ingress gateways. Default values for all
 # ingress gateways are defined in `ingressGateways.defaults`. Any of
 # these values may be overridden in `ingressGateways.gateways` for a

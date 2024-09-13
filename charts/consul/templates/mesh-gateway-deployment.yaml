@@ -157,6 +157,12 @@ spec:
           {{- end }}
         - name: CONSUL_LOGIN_META
           value: "component=mesh-gateway,pod=$(NAMESPACE)/$(POD_NAME)"
+        {{- else }}
+        - name: CONSUL_ACL_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.meshGateway.aclMeshGatewayToken.secretName }}
+              key: {{ .Values.meshGateway.aclMeshGatewayToken.secretKey }}
         {{- end }}
         - name: CONSUL_NODE_NAME
           value: $(NODE_NAME)-virtual
@@ -237,6 +243,15 @@ spec:
           value: component=mesh-gateway
         - name: DP_SERVICE_NODE_NAME
           value: $(NODE_NAME)-virtual
+        {{- if (not .Values.global.acls.manageSystemACLs) }}
+        - name: DP_CREDENTIAL_TYPE
+          value: static
+        - name: DP_CREDENTIAL_STATIC_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.meshGateway.aclMeshGatewayToken.secretName }}
+              key: {{ .Values.meshGateway.aclMeshGatewayToken.secretKey }}
+        {{- end }}
         command:
         - consul-dataplane
         args:
