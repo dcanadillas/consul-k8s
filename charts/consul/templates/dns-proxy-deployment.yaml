@@ -111,11 +111,11 @@ spec:
                   fieldPath: spec.nodeName
             - name: DP_SERVICE_NODE_NAME
               value: $(NODE_NAME)-virtual
-      {{- if .Values.global.acls.manageSystemACLs }}
-            - name: DP_CREDENTIAL_LOGIN_META1
-              value: pod=$(NAMESPACE)/$(POD_NAME)
-            - name: DP_CREDENTIAL_LOGIN_META2
-              value: component=dns-proxy
+      {{- if and .Values.global.acls.manageSystemACLs (not .Values.dns.proxy.aclToken.secretName) (not .Values.dns.proxy.aclToken.secretKey) }}
+        - name: DP_CREDENTIAL_LOGIN_META1
+          value: pod=$(NAMESPACE)/$(POD_NAME)
+        - name: DP_CREDENTIAL_LOGIN_META2
+          value: component=dns-proxy
       {{- else if (and .Values.dns.proxy.aclToken.secretName .Values.dns.proxy.aclToken.secretKey) }}
             - name: DP_CREDENTIAL_STATIC_TOKEN
               valueFrom:
@@ -154,7 +154,7 @@ spec:
         {{- else }}
             - -tls-disabled
         {{- end }}
-        {{- if .Values.global.acls.manageSystemACLs }}
+        {{- if and .Values.global.acls.manageSystemACLs (not .Values.dns.proxy.aclToken.secretName) (not .Values.dns.proxy.aclToken.secretKey) }}
             - -credential-type=login
             - -login-bearer-token-path=/var/run/secrets/kubernetes.io/serviceaccount/token
         {{- if and .Values.global.federation.enabled .Values.global.federation.primaryDatacenter }}
